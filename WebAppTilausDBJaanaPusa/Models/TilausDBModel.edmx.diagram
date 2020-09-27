@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e5f2929f765c45008950bd92132ac526" Name="Diagram1">
+        <EntityTypeShape EntityType="TilausDBModel1.Asiakkaat" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TilausDBModel1.Henkilot" Width="1.5" PointX="2.375" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TilausDBModel1.Logins" Width="1.5" PointX="6.5" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TilausDBModel1.Postitoimipaikat" Width="1.5" PointX="1.125" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TilausDBModel1.Tilaukset" Width="1.5" PointX="4.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TilausDBModel1.Tilausrivit" Width="1.5" PointX="6.625" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TilausDBModel1.Tuotteet" Width="1.5" PointX="4.125" PointY="3.875" IsExpanded="true" />
+        <AssociationConnector Association="TilausDBModel1.FK_Asiakkaat_Postitoimipaikat" ManuallyRouted="false" />
+        <AssociationConnector Association="TilausDBModel1.FK_Tilaukset_Asiakkaat" ManuallyRouted="false" />
+        <AssociationConnector Association="TilausDBModel1.FK_Tilaukset_Postitoimipaikat" ManuallyRouted="false" />
+        <AssociationConnector Association="TilausDBModel1.FK_Tilausrivit_Tilaukset" ManuallyRouted="false" />
+        <AssociationConnector Association="TilausDBModel1.FK_Tilausrivit_Tuotteet" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

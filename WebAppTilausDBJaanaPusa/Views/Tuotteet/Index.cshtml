@@ -1,0 +1,29 @@
+﻿@model IEnumerable<WebAppTilausDBJaanaPusa.Models.Tuotteet>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="container-fluid">
+    <h2>Index</h2>
+    <p>@Html.ActionLink("Create New", "Create")</p>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-3">
+                <div class="card mb-3">
+                    <h3 class="card-header">@Html.DisplayFor(modelItem => item.Nimi)</h3>
+                    <div class="card-body">
+                        <h5 class="card-title">Hinta @Html.DisplayFor(modelItem => item.Ahinta)</h5>
+                        <h6 class="card-subtitle text-muted">TuoteID @Html.DisplayFor(modelItem => item.TuoteID)</h6>
+                    </div>
+                    <img style="height: 100%; width: 100%; display: block;" src="@Html.DisplayFor(modelItem => item.Kuvalinkki)" alt="@Html.DisplayFor(modelItem => item.Kuvalinkki)">
+                <div class="card-body">
+                    <a href="#" class="card-link">@Html.ActionLink("Edit", "Edit", new { id = item.TuoteID })</a>
+                    <br />
+                    <a href="#" class="card-link">@Html.ActionLink("Delete", "Delete", new { id = item.TuoteID })</a>
+                </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
