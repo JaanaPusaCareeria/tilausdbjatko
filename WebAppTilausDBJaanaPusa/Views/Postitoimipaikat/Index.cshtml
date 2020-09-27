@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<WebAppTilausDBJaanaPusa.Models.Postitoimipaikat>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Postitoimipaikat";
 }
 
-<h2>Index</h2>
+<h2>Postitoimipaikat</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a class="btn btn-outline-secondary" href="~/Postitoimipaikat/Create"><img src="~/Icons/plus-square.svg" alt="Create new" width="20" height="20" title="Create new">  Create new</a>
 </p>
 <table class="table">
     <tr>
@@ -21,9 +21,9 @@
         <td>@Html.DisplayFor(modelItem => item.Postinumero)</td>
         <td>@Html.DisplayFor(modelItem => item.Postitoimipaikka)</td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Postinumero }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Postinumero }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Postinumero })
+            <a class="btn" href="~/Postitoimipaikat/Edit/@item.Postinumero"><img src="~/Icons/pencil.svg" alt="Edit" width="22" height="22" title="Edit"></a>|
+            <a class="btn" href="~/Postitoimipaikat/Details/@item.Postinumero"><img src="~/Icons/info-square.svg" alt="Details" width="22" height="22" title="Details"></a> |
+            <a class="btn" href="~/Postitoimipaikat/Delete/@item.Postinumero"><img src="~/Icons/trash.svg" alt="Delete" width="22" height="22" title="Delete"></a>
         </td>
     </tr>
 }

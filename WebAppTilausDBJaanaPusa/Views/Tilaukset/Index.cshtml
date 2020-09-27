@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<WebAppTilausDBJaanaPusa.Models.Tilaukset>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Tilaukset";
 }
 
-<h2>Index</h2>
+<h2>Tilaukset</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a class="btn btn-outline-secondary" href="~/Tilaukset/Create"><img src="~/Icons/plus-square.svg" alt="Create new" width="20" height="20" title="Create new">  Create new</a>
 </p>
 <table class="table">
     <tr>
@@ -31,9 +31,9 @@
     <td>@Html.DisplayFor(modelItem => item.Asiakkaat.Nimi)</td>
     <td>@Html.DisplayFor(modelItem => item.Postitoimipaikat.Postitoimipaikka)</td>
     <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.TilausID }) |
-        @Html.ActionLink("Details", "Details", new { id = item.TilausID }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.TilausID })
+        <a class="btn" href="~/Tilaukset/Edit/@item.TilausID"><img src="~/Icons/pencil.svg" alt="Edit" width="22" height="22" title="Edit"></a>|
+        <a class="btn" href="~/Tilaukset/Details/@item.TilausID"><img src="~/Icons/info-square.svg" alt="Details" width="22" height="22" title="Details"></a> |
+        <a class="btn" href="~/Tilaukset/Delete/@item.TilausID"><img src="~/Icons/trash.svg" alt="Delete" width="22" height="22" title="Delete"></a>
     </td>
 </tr>
 }

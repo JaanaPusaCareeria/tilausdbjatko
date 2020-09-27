@@ -191,6 +191,10 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Icons\info-square.svg" />
+    <Content Include="Icons\pencil.svg" />
+    <Content Include="Icons\plus-square.svg" />
+    <Content Include="Icons\trash.svg" />
     <Content Include="Models\TilausDBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>TilausDBModel.edmx</DependentUpon>
