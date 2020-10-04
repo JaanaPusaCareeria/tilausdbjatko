@@ -9,6 +9,16 @@
 <p>
     <a class="btn btn-outline-secondary" href="~/Asiakkaat/Create"><img src="~/Icons/plus-square.svg" alt="Create new" width="20" height="20" title="Create new">  Create new</a>
 </p>
+
+@using (Html.BeginForm("Index", "Asiakkaat", FormMethod.Get))
+{
+    <div class="input-group">
+        <p class="px-1">@Html.Label("Etsi nimellä:")</p>
+        <p class="px-1">@Html.TextBox("NimiHaku", ViewBag.nimiSuodatin as string, new { @class = "form-control" })</p>
+        <p class="px-1"><input type="submit" value="Search" class="form-control" /></p>
+    </div>
+}
+
 <table class="table">
     <tr>
         <th>@Html.DisplayNameFor(model => model.AsiakasID)</th>

@@ -14,7 +14,7 @@ namespace WebAppTilausDBJaanaPusa.Controllers
     {
         private TilausDBEntities1 db = new TilausDBEntities1();
         // GET: Asiakkaat
-        public ActionResult Index()
+        public ActionResult Index(string nimiHaku)
         {
             if (Session["UserName"] == null) //Tarkistaa, onko kirjauduttu sisään. Jos Session-UserName on tyhjä
             {
@@ -24,8 +24,16 @@ namespace WebAppTilausDBJaanaPusa.Controllers
             else
             {
                 ViewBag.LoggedStatus = "Kirjautuneena";
-                List<Asiakkaat> model = db.Asiakkaat.ToList(); //Luodaan lista Asiakkaat-luokan ilmentymistä nimellä model ja tallennetaan siihen tietokannan Asiakkaat 
-                return View(model); //palautetaan yllä muodostettu lista-näkymä
+                var asiakkaat = from a in db.Asiakkaat
+                                select a;
+
+                if (!String.IsNullOrEmpty(nimiHaku))
+                {
+                    asiakkaat = asiakkaat.Where(a => a.Nimi.Contains(nimiHaku));
+                }
+
+                //List<Asiakkaat> model = db.Asiakkaat.ToList(); //Luodaan lista Asiakkaat-luokan ilmentymistä nimellä model ja tallennetaan siihen tietokannan Asiakkaat 
+                return View(asiakkaat); //palautetaan yllä muodostettu lista-näkymä
             }
 
         }
