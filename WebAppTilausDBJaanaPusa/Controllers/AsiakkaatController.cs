@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebAppTilausDBJaanaPusa.Models;
+using PagedList;
 
 namespace WebAppTilausDBJaanaPusa.Controllers
 {
@@ -14,7 +15,7 @@ namespace WebAppTilausDBJaanaPusa.Controllers
     {
         private TilausDBEntities1 db = new TilausDBEntities1();
         // GET: Asiakkaat
-        public ActionResult Index(string nimiHaku)
+        public ActionResult Index(string lajittelu, string nimiSuodatin, string nimiHaku, int? sivu, int? sivukoko)
         {
             if (Session["UserName"] == null) //Tarkistaa, onko kirjauduttu sisään. Jos Session-UserName on tyhjä
             {
@@ -24,16 +25,55 @@ namespace WebAppTilausDBJaanaPusa.Controllers
             else
             {
                 ViewBag.LoggedStatus = "Kirjautuneena";
+
+                ViewBag.LajitteluKaytossa = lajittelu;
+                ViewBag.AsiakkaanNimiLajittelu = String.IsNullOrEmpty(lajittelu) ? "asnimi_lask" : "";
+
+                if (nimiHaku != null)
+                {
+                    sivu = 1;
+                }
+                else
+                {
+                    nimiHaku = nimiSuodatin;
+                }
+
+                ViewBag.nimiSuodatin = nimiHaku;
+
                 var asiakkaat = from a in db.Asiakkaat
                                 select a;
 
                 if (!String.IsNullOrEmpty(nimiHaku))
                 {
-                    asiakkaat = asiakkaat.Where(a => a.Nimi.Contains(nimiHaku));
+                    switch (lajittelu)
+                    {
+                        case "asnimi_lask":
+                            asiakkaat = asiakkaat.Where(a => a.Nimi.Contains(nimiHaku)).OrderByDescending(a => a.Nimi);
+                            break;
+                        default:
+                            asiakkaat = asiakkaat.Where(a => a.Nimi.Contains(nimiHaku)).OrderBy(a => a.Nimi);
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (lajittelu)
+                    {
+                        case "asnimi_lask":
+                            asiakkaat = asiakkaat.OrderByDescending(a => a.Nimi);
+                            break;
+                        default:
+                            asiakkaat = asiakkaat.OrderBy(a => a.Nimi);
+                            break;
+                    }
                 }
 
+                int sivuKoko = (sivukoko ?? 8);
+                int sivuNumero = (sivu ?? 1);
+                return View(asiakkaat.ToPagedList(sivuNumero, sivuKoko));
+
                 //List<Asiakkaat> model = db.Asiakkaat.ToList(); //Luodaan lista Asiakkaat-luokan ilmentymistä nimellä model ja tallennetaan siihen tietokannan Asiakkaat 
-                return View(asiakkaat); //palautetaan yllä muodostettu lista-näkymä
+                //return View(asiakkaat); //palautetaan yllä muodostettu lista-näkymä
             }
 
         }

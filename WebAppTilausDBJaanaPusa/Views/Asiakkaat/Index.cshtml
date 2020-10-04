@@ -1,4 +1,7 @@
-﻿@model IEnumerable<WebAppTilausDBJaanaPusa.Models.Asiakkaat>
+﻿@*@model IEnumerable<WebAppTilausDBJaanaPusa.Models.Asiakkaat>*@
+@model PagedList.IPagedList<WebAppTilausDBJaanaPusa.Models.Asiakkaat>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Asiakkaat";
@@ -15,16 +18,16 @@
     <div class="input-group">
         <p class="px-1">@Html.Label("Etsi nimellä:")</p>
         <p class="px-1">@Html.TextBox("NimiHaku", ViewBag.nimiSuodatin as string, new { @class = "form-control" })</p>
-        <p class="px-1"><input type="submit" value="Search" class="form-control" /></p>
+        <p class="px-1"><input type="submit" value="Etsi" class="form-control" /></p>
     </div>
 }
 
 <table class="table">
     <tr>
-        <th>@Html.DisplayNameFor(model => model.AsiakasID)</th>
-        <th>@Html.DisplayNameFor(model => model.Nimi)</th>
-        <th>@Html.DisplayNameFor(model => model.Osoite)</th>
-        <th>@Html.DisplayNameFor(model => model.Postitoimipaikat.Postitoimipaikka)</th>
+        <th>AsiakasID</th>
+        <th>@Html.ActionLink("Nimi", "Index", new { lajittelu = ViewBag.AsiakkaanNimiLajittelu, nimiSuodatin = ViewBag.nimiSuodatin })</th>
+        <th>Osoite</th>
+        <th>Postitoimipaikka</th>
         <th></th>
     </tr>
 
@@ -42,3 +45,6 @@
 }
 
 </table>
+
+Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+@Html.PagedListPager(Model, sivu => Url.Action("Index", new { sivu, lajittelu = ViewBag.LajitteluKaytossa, nimiSuodatin = ViewBag.nimiSuodatin }))
