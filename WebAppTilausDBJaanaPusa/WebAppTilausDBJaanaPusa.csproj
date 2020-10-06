@@ -381,6 +381,8 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Asiakkaat\Details.cshtml" />
+    <Content Include="Views\Shared\_NavbarLoggedIn.cshtml" />
+    <Content Include="Views\Shared\_NavbarLoggedOut.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

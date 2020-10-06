@@ -8,84 +8,17 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Kahvitauko</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    @{ 
+        if (Session["UserName"] == null)
+        {
+            Html.RenderPartial("_NavbarLoggedOut");
+        } else
+        {
+            Html.RenderPartial("_NavbarLoggedIn");
+        }
+    }
 
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active"><a class="nav-link" href="/Home/Logout">Logout<span class="sr-only"></span></a></li>
-                <li class="nav-item active"><a class="nav-link" href="./">Home<span class="sr-only">(current)</span></a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Yritys</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/Home/About">About</a>
-                        <a class="dropdown-item" href="/Home/Contact">Contact</a>
-                    </div>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Ylläpitotoiminnot</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/Asiakkaat/Index">Asiakkaat</a>
-                        <a class="dropdown-item" href="/Henkilot/Index">Henkilöt</a>
-                        <a class="dropdown-item" href="/Postitoimipaikat/Index">Postitoimipaikat</a>
-                        <a class="dropdown-item" href="/Tuotteet/Index">Tuotteet</a>
-                    </div>
-                    @*<li class="nav-item">
-                <a class="nav-link" href="/Asiakkaat/Index">Asiakkaat</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/Henkilot/Index">Henkilöt</a>
-            </li>*@
-                    @*<li class="nav-item">
-                <a class="nav-link" href="/Postitoimipaikat/Index">Postitoimipaikat</a>
-            </li>*@
-                <li class="nav-item">
-                    <a class="nav-link" href="/Tilaukset/Index">Tilaukset</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Tilausrivit/Index">Tilausrivit</a>
-                </li>
-                @*<li class="nav-item">
-            <a class="nav-link" href="/Tuotteet/Index">Tuotteet</a>
-        </li>*@
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                @*<input class="form-control mr-sm-2" type="text" placeholder="Search">*@
-                @*<a class="nav-item active"><a class="nav-link" href="/Home/Login">Login<span class="sr-only"></span></a></a>*@
-                <a class="navbar-brand" href="/Home/Login">Login (@ViewBag.LoggedStatus)<span class="sr-only"></span></a>
-                @*<a class="navbar-brand" href="#">(@ViewBag.LoggedStatus)</a>*@
-            </form>
-        </div>
-    </nav>
-    @*<div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        <li>@Html.ActionLink("Asiakkaat", "Index", "Asiakkaat")</li>
-                        <li>@Html.ActionLink("Henkilöt", "Index", "Henkilot")</li>
-                        <li>@Html.ActionLink("Postitoimipaikat", "Index", "Postitoimipaikat")</li>
-                        <li>@Html.ActionLink("Tilaukset", "Index", "Tilaukset")</li>
-                        <li>@Html.ActionLink("Tilausrivit", "Index", "Tilausrivit")</li>
-                        <li>@Html.ActionLink("Tuotteet", "Index", "Tuotteet")</li>
-
-                    </ul>
-                </div>
-            </div>
-        </div>*@
-    <div class="container body-content">
+    <div class="container-fluid">
         @RenderBody()
         <hr />
         <footer>

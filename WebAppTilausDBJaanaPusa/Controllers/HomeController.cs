@@ -16,6 +16,7 @@ namespace WebAppTilausDBJaanaPusa.Controllers
                 ViewBag.LoggedStatus = "Kirjaudu sisään";
             }
             else ViewBag.LoggedStatus = "Kirjautuneena";
+            ViewBag.LoginError = 0;
             return View(); //Palauttaa index-näkymän
         }
 
@@ -43,6 +44,7 @@ namespace WebAppTilausDBJaanaPusa.Controllers
             {
                 ViewBag.LoginMessage = "Kirjautuminen onnistui";
                 ViewBag.LoggedStatus = "Kirjautuneena";
+                ViewBag.LoginError = 0;
                 Session["UserName"] = LoggedUser.UserName; //asettaa Session-olion parametriksi annetun UserNamen
                 return RedirectToAction("Index", "Home"); //Onnistunut kirjautuminen johtaa Home/Index -sivulle
             }
@@ -50,8 +52,9 @@ namespace WebAppTilausDBJaanaPusa.Controllers
             {
                 ViewBag.LoginMessage = "Kirjautuminen epäonnistui";
                 ViewBag.LoggedStatus = "Kirjaudu sisään";
+                ViewBag.LoginError = 1;
                 LoginModel.LoginErrorMessage = "Tuntematon käyttäjätunnus tai salasana"; //antaa virheilmoituksen
-                return View("Login", LoginModel); //palauttaa Login-näkymän
+                return View("Index", LoginModel); //palauttaa Login-näkymän
             }
         }
 
