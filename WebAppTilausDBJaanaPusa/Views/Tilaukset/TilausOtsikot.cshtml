@@ -9,43 +9,78 @@
         $(function () {
             $(".naytaTilausId").click(function () {
                 let tilausid = $(this).data("tilausid");
-                alert("Klikkasit tilausnumeroa: " + tilausid);
+                //alert("Klikkasit tilausnumeroa: " + tilausid);
             });
         })
 
     </script>
-    }
+}
 
 <h2>TilausOtsikot</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.TilausID)</th>
-        <th>@Html.DisplayNameFor(model => model.Toimitusosoite)</th>
-        <th>@Html.DisplayNameFor(model => model.Tilauspvm)</th>
-        <th>@Html.DisplayNameFor(model => model.Toimituspvm)</th>
-        <th>@Html.DisplayNameFor(model => model.Asiakkaat.Nimi)</th>
-        <th>@Html.DisplayNameFor(model => model.Postitoimipaikat.Postitoimipaikka)</th>
-        <th></th>
-    </tr>
+<div class="container-fluid">
+    <div class="card-header">
+        <a class="card-link">
+            <form>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-secondary font-weight-bold">Tilaus</span>
+                    </div>
+                    <input type="text" class="form-control bg-secondary font-weight-bold px-2" value="Asiakas">
+                    <input type="text" class="form-control bg-secondary font-weight-bold px-2" value="Toimitusosoite">
+                    <input type="text" class="form-control bg-secondary font-weight-bold px-2" value="Postinumero">
+                    <input type="text" class="form-control bg-secondary font-weight-bold px-2" value="Postitoimipaikka">
+                    <input type="text" class="form-control bg-secondary font-weight-bold px-2" value="Tilauspvm">
+                    <input type="text" class="form-control bg-secondary font-weight-bold px-2" value="Toimituspvm">
+                </div>
+            </form>
+        </a>
+    </div>
+    <div id="accordion">
+        @foreach (var item in Model)
+        {
+            <div class="card">
+                <div class="card-header">
+                    <a class="card-link naytaTilausId" data-tilausid="@item.TilausID" data-toggle="collapse" href="#collapse_@item.TilausID">
+                        <form>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">@item.TilausID</span>
+                                </div>
+                                <input type="text" class="form-control px-2" value="@item.Asiakkaat.Nimi" disabled>
+                                <input type="text" class="form-control px-2" value="@item.Toimitusosoite" disabled>
+                                <input type="text" class="form-control px-2" value="@item.Postinumero" disabled>
+                                <input type="text" class="form-control px-2" value="@item.Postitoimipaikat" disabled>
+                                <input type="text" class="form-control px-2" value="@item.Tilauspvm" disabled>
+                                <input type="text" class="form-control px-2" value="@item.Toimituspvm" disabled>
+                            </div>
+                        </form>
+                    </a>
+                </div>
+                <div id="collapse_@item.TilausID" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                        <p>Ladataan tilauksen @item.TilausID rivit...</p>
+                        @*<div id="tilausRivit_@item.TilausID"></div>*@
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
 
-@foreach (var item in Model) {
-    <tr class="naytaTilausId" data-tilausid="@item.TilausID">
-        <td>@Html.DisplayFor(modelItem => item.TilausID)</td>
-        <td>@Html.DisplayFor(modelItem => item.Toimitusosoite)</td>
-        <td>@Html.DisplayFor(modelItem => item.Tilauspvm)</td>
-        <td>@Html.DisplayFor(modelItem => item.Toimituspvm)</td>
-        <td>@Html.DisplayFor(modelItem => item.Asiakkaat.Nimi)</td>
-        <td>@Html.DisplayFor(modelItem => item.Postitoimipaikat.Postitoimipaikka)</td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.TilausID }) |
-            @Html.ActionLink("Details", "Details", new { id = item.TilausID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.TilausID })
-        </td>
-    </tr>
-}
-
-</table>
+@*<tr class="naytaTilausId" data-tilausid="@item.TilausID">
+    <td>@Html.DisplayFor(modelItem => item.TilausID)</td>
+    <td>@Html.DisplayFor(modelItem => item.Toimitusosoite)</td>
+    <td>@Html.DisplayFor(modelItem => item.Tilauspvm)</td>
+    <td>@Html.DisplayFor(modelItem => item.Toimituspvm)</td>
+    <td>@Html.DisplayFor(modelItem => item.Asiakkaat.Nimi)</td>
+    <td>@Html.DisplayFor(modelItem => item.Postitoimipaikat.Postitoimipaikka)</td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.TilausID }) |
+        @Html.ActionLink("Details", "Details", new { id = item.TilausID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.TilausID })
+    </td>
+</tr>*@
