@@ -174,8 +174,6 @@ namespace WebAppTilausDBJaanaPusa.Controllers
             {
                 return View();
             }
-
-
         }
 
         protected override void Dispose(bool disposing)
@@ -185,6 +183,21 @@ namespace WebAppTilausDBJaanaPusa.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult TilausOtsikot()
+        {
+            //if (Session["UserName"] == null) //Tarkistaa, onko kirjauduttu sisään. Jos Session-UserName on tyhjä
+            //{
+            //    ViewBag.LoggedStatus = "Kirjaudu sisään";
+            //    return RedirectToAction("login", "home"); //Palautetaan Login-näkymä HomeControllerista
+            //}
+            //else
+            //{
+                //ViewBag.LoggedStatus = "Kirjautuneena";
+                var tilaukset = db.Tilaukset.Include(t => t.Asiakkaat).Include(t => t.Postitoimipaikat);
+                return View(tilaukset.ToList());
+            //}
         }
 
     }
