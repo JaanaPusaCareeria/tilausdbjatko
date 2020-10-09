@@ -383,6 +383,7 @@
     <Content Include="Views\Asiakkaat\Details.cshtml" />
     <Content Include="Views\Shared\_NavbarLoggedIn.cshtml" />
     <Content Include="Views\Shared\_NavbarLoggedOut.cshtml" />
+    <Content Include="Views\Home\_LoginModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
