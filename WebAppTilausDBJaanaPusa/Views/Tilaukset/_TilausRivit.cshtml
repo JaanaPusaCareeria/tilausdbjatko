@@ -1,0 +1,42 @@
+﻿@model IEnumerable<WebAppTilausDBJaanaPusa.ViewModels.TilausRivit>
+
+@*@{
+    ViewBag.Title = "_TilausRivit";
+}
+
+<h2>_TilausRivit</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table">
+    <thead class="table-secondary">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.TilausID)</th>
+            <th>@Html.DisplayNameFor(model => model.TilausriviID)</th>
+            <th>@Html.DisplayNameFor(model => model.TuoteID)</th>
+            <th>Tuotteen nimi</th>
+            <th>Määrä</th>
+            <th>@Html.DisplayNameFor(model => model.Ahinta)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.TilausID)</td>
+                <td>@Html.DisplayFor(modelItem => item.TilausriviID)</td>
+                <td>@Html.DisplayFor(modelItem => item.TuoteID)</td>
+                <td>@Html.DisplayFor(modelItem => item.TuoteNimi)</td>
+                <td>@Html.DisplayFor(modelItem => item.Maara)</td>
+                <td>@Html.DisplayFor(modelItem => item.Ahinta)</td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

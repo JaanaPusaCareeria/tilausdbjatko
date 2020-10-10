@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebAppTilausDBJaanaPusa.Models;
+using WebAppTilausDBJaanaPusa.ViewModels;
 
 namespace WebAppTilausDBJaanaPusa.Controllers
 {
@@ -25,7 +26,7 @@ namespace WebAppTilausDBJaanaPusa.Controllers
             else
             {
                 ViewBag.LoggedStatus = "Kirjautuneena";
-                var tilaukset = db.Tilaukset.Include(t => t.Asiakkaat).Include(t => t.Postitoimipaikat);
+                var tilaukset = db.Tilaukset.Include(t => t.Asiakkaat).Include(t => t.Postitoimipaikat);        
                 return View(tilaukset.ToList());
             }
         }
@@ -197,6 +198,33 @@ namespace WebAppTilausDBJaanaPusa.Controllers
                 //ViewBag.LoggedStatus = "Kirjautuneena";
                 var tilaukset = db.Tilaukset.Include(t => t.Asiakkaat).Include(t => t.Postitoimipaikat);
                 return View(tilaukset.ToList());
+            //}
+        }
+
+        public ActionResult _TilausRivit(int? tilausid)
+        {
+            //if (Session["UserName"] == null) //Tarkistaa, onko kirjauduttu sisään. Jos Session-UserName on tyhjä
+            //{
+            //    ViewBag.LoggedStatus = "Kirjaudu sisään";
+            //    return RedirectToAction("login", "home"); //Palautetaan Login-näkymä HomeControllerista
+            //}
+            //else
+            //{
+                ViewBag.LoggedStatus = "Kirjautuneena";
+                var tilausRivilista  = from tr in db.Tilausrivit
+                                       join t in db.Tuotteet on tr.TuoteID equals t.TuoteID
+                                       where tr.TilausID == tilausid
+                                       select new TilausRivit
+                                       {
+                                           TilausID = (int)tr.TilausID,
+                                           TilausriviID = tr.TilausriviID,
+                                           TuoteID = t.TuoteID,
+                                           TuoteNimi = t.Nimi,
+                                           Maara = (int)tr.Maara,
+                                           Ahinta = (float)t.Ahinta
+                                       };
+
+                    return PartialView(tilausRivilista);
             //}
         }
 

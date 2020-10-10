@@ -28,6 +28,8 @@ namespace WebAppTilausDBJaanaPusa.Models
         public Nullable<System.DateTime> Toimituspvm { get; set; }
     
         public virtual Asiakkaat Asiakkaat { get; set; }
+
+        public virtual Postitoimipaikat Postitoimipaikka { get; set; }
         public virtual Postitoimipaikat Postitoimipaikat { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tilausrivit> Tilausrivit { get; set; }

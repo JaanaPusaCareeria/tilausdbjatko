@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<WebAppTilausDBJaanaPusa.Models.Tilaukset>
 
 @{
-    ViewBag.Title = "TilausOtsikot";
+    ViewBag.Title = "Tilaukset";
 }
 
 @section scripts {
@@ -9,7 +9,13 @@
         $(function () {
             $(".naytaTilausId").click(function () {
                 let tilausid = $(this).data("tilausid");
-                //alert("Klikkasit tilausnumeroa: " + tilausid);
+                @*alert("Klikkasit tilausnumeroa: " + tilausid);*@
+                var url = "/Tilaukset/_TilausRivit/?TilausID=" + tilausid;
+                $("#tilausRivit_" + tilausid).append(" <b>Ladataan tilauksen " + tilausid + " rivejä...</b>");
+                var $riviDiv = $("#tilausRivit_" + tilausid);
+                $.get(url, function (data) {
+                    $riviDiv.replaceWith(data);
+                });
             });
         })
 
@@ -53,7 +59,7 @@
                                 <input type="text" class="form-control px-2" value="@item.Asiakkaat.Nimi" disabled>
                                 <input type="text" class="form-control px-2" value="@item.Toimitusosoite" disabled>
                                 <input type="text" class="form-control px-2" value="@item.Postinumero" disabled>
-                                <input type="text" class="form-control px-2" value="@item.Postitoimipaikat" disabled>
+                                <input type="text" class="form-control px-2" value="@item.Postitoimipaikat.Postitoimipaikka" disabled>
                                 <input type="text" class="form-control px-2" value="@item.Tilauspvm" disabled>
                                 <input type="text" class="form-control px-2" value="@item.Toimituspvm" disabled>
                             </div>
@@ -62,25 +68,10 @@
                 </div>
                 <div id="collapse_@item.TilausID" class="collapse" data-parent="#accordion">
                     <div class="card-body">
-                        <p>Ladataan tilauksen @item.TilausID rivit...</p>
-                        @*<div id="tilausRivit_@item.TilausID"></div>*@
+                        <div id="tilausRivit_@item.TilausID"></div>
                     </div>
                 </div>
             </div>
         }
     </div>
 </div>
-
-@*<tr class="naytaTilausId" data-tilausid="@item.TilausID">
-    <td>@Html.DisplayFor(modelItem => item.TilausID)</td>
-    <td>@Html.DisplayFor(modelItem => item.Toimitusosoite)</td>
-    <td>@Html.DisplayFor(modelItem => item.Tilauspvm)</td>
-    <td>@Html.DisplayFor(modelItem => item.Toimituspvm)</td>
-    <td>@Html.DisplayFor(modelItem => item.Asiakkaat.Nimi)</td>
-    <td>@Html.DisplayFor(modelItem => item.Postitoimipaikat.Postitoimipaikka)</td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.TilausID }) |
-        @Html.ActionLink("Details", "Details", new { id = item.TilausID }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.TilausID })
-    </td>
-</tr>*@
