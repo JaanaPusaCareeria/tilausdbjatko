@@ -162,6 +162,12 @@
     <Compile Include="Models\Tilaukset.cs">
       <DependentUpon>TilausDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TilauksetPaivittain.cs">
+      <DependentUpon>TilausDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TilauksetViikonpaivittain.cs">
+      <DependentUpon>TilausDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TilausDBModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -178,6 +184,9 @@
       <DependentUpon>TilausDBModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Tilausrivit.cs">
+      <DependentUpon>TilausDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Top10Myynti.cs">
       <DependentUpon>TilausDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tuotteet.cs">

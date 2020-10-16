@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TilausDBModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TilausDBModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Asiakkaat">
           <Key>
             <PropertyRef Name="AsiakasID" />
@@ -71,6 +71,38 @@
           <Property Name="Ahinta" Type="numeric" Precision="7" Scale="2" />
           <Property Name="Kuva" Type="image" />
           <Property Name="Kuvalinkki" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TilausDB.dbo.TilauksetPaivittain' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TilauksetPaivittain">
+          <Key>
+            <PropertyRef Name="RiviID" />
+          </Key>
+          <Property Name="RiviID" Type="bigint" Nullable="false" />
+          <Property Name="Tilauspaiva" Type="datetime" />
+          <Property Name="Viikonpaiva" Type="nvarchar" MaxLength="30" />
+          <Property Name="Tilausmaara" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TilausDB.dbo.TilauksetViikonpaivittain' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TilauksetViikonpaivittain">
+          <Key>
+            <PropertyRef Name="RiviID" />
+          </Key>
+          <Property Name="RiviID" Type="bigint" Nullable="false" />
+          <Property Name="viikonpaiva" Type="nvarchar" MaxLength="30" />
+          <Property Name="tilausmaara" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TilausDB.dbo.Top10Myynti' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Top10Myynti">
+          <Key>
+            <PropertyRef Name="RiviID" />
+          </Key>
+          <Property Name="RiviID" Type="bigint" Nullable="false" />
+          <Property Name="TuoteID" Type="int" />
+          <Property Name="Tuotenimi" Type="varchar" MaxLength="50" />
+          <Property Name="Myynti" Type="numeric" Precision="38" Scale="2" />
         </EntityType>
         <Association Name="FK_Asiakkaat_Postitoimipaikat">
           <End Role="Postitoimipaikat" Type="Self.Postitoimipaikat" Multiplicity="0..1" />
@@ -140,6 +172,29 @@
           <EntitySet Name="Tilaukset" EntityType="Self.Tilaukset" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tilausrivit" EntityType="Self.Tilausrivit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tuotteet" EntityType="Self.Tuotteet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TilauksetPaivittain" EntityType="Self.TilauksetPaivittain" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TilauksetPaivittain].[RiviID] AS [RiviID], 
+    [TilauksetPaivittain].[Tilauspaiva] AS [Tilauspaiva], 
+    [TilauksetPaivittain].[Viikonpaiva] AS [Viikonpaiva], 
+    [TilauksetPaivittain].[Tilausmaara] AS [Tilausmaara]
+    FROM [dbo].[TilauksetPaivittain] AS [TilauksetPaivittain]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TilauksetViikonpaivittain" EntityType="Self.TilauksetViikonpaivittain" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TilauksetViikonpaivittain].[RiviID] AS [RiviID], 
+    [TilauksetViikonpaivittain].[viikonpaiva] AS [viikonpaiva], 
+    [TilauksetViikonpaivittain].[tilausmaara] AS [tilausmaara]
+    FROM [dbo].[TilauksetViikonpaivittain] AS [TilauksetViikonpaivittain]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Top10Myynti" EntityType="Self.Top10Myynti" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Top10Myynti].[RiviID] AS [RiviID], 
+    [Top10Myynti].[TuoteID] AS [TuoteID], 
+    [Top10Myynti].[Tuotenimi] AS [Tuotenimi], 
+    [Top10Myynti].[Myynti] AS [Myynti]
+    FROM [dbo].[Top10Myynti] AS [Top10Myynti]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Asiakkaat_Postitoimipaikat" Association="Self.FK_Asiakkaat_Postitoimipaikat">
             <End Role="Postitoimipaikat" EntitySet="Postitoimipaikat" />
             <End Role="Asiakkaat" EntitySet="Asiakkaat" />
@@ -161,8 +216,7 @@
             <End Role="Tilausrivit" EntitySet="Tilausrivit" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TilausDBModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -331,7 +385,36 @@
             <End Role="Tuotteet" EntitySet="Tuotteet" />
             <End Role="Tilausrivit" EntitySet="Tilausrivit" />
           </AssociationSet>
+          <EntitySet Name="TilauksetPaivittain" EntityType="TilausDBModel1.TilauksetPaivittain" />
+          <EntitySet Name="TilauksetViikonpaivittain" EntityType="TilausDBModel1.TilauksetViikonpaivittain" />
+          <EntitySet Name="Top10Myynti" EntityType="TilausDBModel1.Top10Myynti" />
         </EntityContainer>
+        <EntityType Name="TilauksetPaivittain">
+          <Key>
+            <PropertyRef Name="RiviID" />
+          </Key>
+          <Property Name="RiviID" Type="Int64" Nullable="false" />
+          <Property Name="Tilauspaiva" Type="DateTime" Precision="3" />
+          <Property Name="Viikonpaiva" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Tilausmaara" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TilauksetViikonpaivittain">
+          <Key>
+            <PropertyRef Name="RiviID" />
+          </Key>
+          <Property Name="RiviID" Type="Int64" Nullable="false" />
+          <Property Name="viikonpaiva" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="tilausmaara" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Top10Myynti">
+          <Key>
+            <PropertyRef Name="RiviID" />
+          </Key>
+          <Property Name="RiviID" Type="Int64" Nullable="false" />
+          <Property Name="TuoteID" Type="Int32" />
+          <Property Name="Tuotenimi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Myynti" Type="Decimal" Precision="38" Scale="2" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -409,6 +492,35 @@
                 <ScalarProperty Name="Ahinta" ColumnName="Ahinta" />
                 <ScalarProperty Name="Kuva" ColumnName="Kuva" />
                 <ScalarProperty Name="Kuvalinkki" ColumnName="Kuvalinkki" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TilauksetPaivittain">
+            <EntityTypeMapping TypeName="TilausDBModel1.TilauksetPaivittain">
+              <MappingFragment StoreEntitySet="TilauksetPaivittain">
+                <ScalarProperty Name="Tilausmaara" ColumnName="Tilausmaara" />
+                <ScalarProperty Name="Viikonpaiva" ColumnName="Viikonpaiva" />
+                <ScalarProperty Name="Tilauspaiva" ColumnName="Tilauspaiva" />
+                <ScalarProperty Name="RiviID" ColumnName="RiviID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TilauksetViikonpaivittain">
+            <EntityTypeMapping TypeName="TilausDBModel1.TilauksetViikonpaivittain">
+              <MappingFragment StoreEntitySet="TilauksetViikonpaivittain">
+                <ScalarProperty Name="tilausmaara" ColumnName="tilausmaara" />
+                <ScalarProperty Name="viikonpaiva" ColumnName="viikonpaiva" />
+                <ScalarProperty Name="RiviID" ColumnName="RiviID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Top10Myynti">
+            <EntityTypeMapping TypeName="TilausDBModel1.Top10Myynti">
+              <MappingFragment StoreEntitySet="Top10Myynti">
+                <ScalarProperty Name="Myynti" ColumnName="Myynti" />
+                <ScalarProperty Name="Tuotenimi" ColumnName="Tuotenimi" />
+                <ScalarProperty Name="TuoteID" ColumnName="TuoteID" />
+                <ScalarProperty Name="RiviID" ColumnName="RiviID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -11,10 +11,7 @@ namespace WebAppTilausDBJaanaPusa.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    //using System.Globalization;
-
+    
     public partial class Tilaukset
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,42 +19,15 @@ namespace WebAppTilausDBJaanaPusa.Models
         {
             this.Tilausrivit = new HashSet<Tilausrivit>();
         }
-
-        //string pvmformat = "dd.MM.yyyy";
-        //CultureInfo kulttuuri = CultureInfo.InvariantCulture;
     
         public int TilausID { get; set; }
         public Nullable<int> AsiakasID { get; set; }
         public string Toimitusosoite { get; set; }
         public string Postinumero { get; set; }
-        //private string tilauspvm;
-        //[DisplayFormat(DataFormatString = "{0;d}")]
         public Nullable<System.DateTime> Tilauspvm { get; set; }
-
-        //public DateTime TilausPaiva
-        //{
-
-        //    get
-        //    {
-
-        //        tilauspvm = Tilauspvm.GetValueOrDefault().ToShortDateString();
-        //        TilausPaiva = DateTime.Parse(tilauspvm);
-        //        return TilausPaiva;
-
-        //    }
-        //    set
-        //    {
-        //        //if (Tilauspvm.HasValue) { 
-        //        //tilauspvm = Tilauspvm.Value.ToShortDateString();
-        //        //}
-        //        //TilausPaiva = DateTime.Parse(tilauspvm);
-        //    }
-        //}
         public Nullable<System.DateTime> Toimituspvm { get; set; }
     
         public virtual Asiakkaat Asiakkaat { get; set; }
-
-        public virtual Postitoimipaikat Postitoimipaikka { get; set; }
         public virtual Postitoimipaikat Postitoimipaikat { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tilausrivit> Tilausrivit { get; set; }

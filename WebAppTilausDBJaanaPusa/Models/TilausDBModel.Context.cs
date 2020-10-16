@@ -32,5 +32,8 @@ namespace WebAppTilausDBJaanaPusa.Models
         public virtual DbSet<Tilaukset> Tilaukset { get; set; }
         public virtual DbSet<Tilausrivit> Tilausrivit { get; set; }
         public virtual DbSet<Tuotteet> Tuotteet { get; set; }
+        public virtual DbSet<TilauksetPaivittain> TilauksetPaivittain { get; set; }
+        public virtual DbSet<TilauksetViikonpaivittain> TilauksetViikonpaivittain { get; set; }
+        public virtual DbSet<Top10Myynti> Top10Myynti { get; set; }
     }
 }
