@@ -179,30 +179,38 @@ namespace WebAppTilausDBJaanaPusa.Controllers
 
         public ActionResult Myydyimmat()
         {
-            string tuoteNimiLista;
-            string tuoteMyyntiLista;
-
-            List<MyydyimmatTuotteet> myydyimmatTuotteetLista = new List<MyydyimmatTuotteet>();
-
-            var myydyimmatTuott = from tm in db.Top10Myynnit
-                                  orderby tm.myynti descending
-                                  select tm;
-
-            foreach (Top10Myynnit topmyynti in myydyimmatTuott)
+            if (Session["UserName"] == null) //Tarkistaa, onko kirjauduttu sisään. Jos Session-UserName on tyhjä
             {
-                MyydyimmatTuotteet myytyTuote = new MyydyimmatTuotteet();
-                myytyTuote.Tuotenimi = topmyynti.tuotenimi;
-                myytyTuote.Myyntieur = (int)topmyynti.myynti;
-                myydyimmatTuotteetLista.Add(myytyTuote);
+                ViewBag.LoggedStatus = "Kirjaudu sisään";
+                return RedirectToAction("login", "home"); //Palautetaan Login-näkymä HomeControllerista
             }
+            else
+            {
+                string tuoteNimiLista;
+                string tuoteMyyntiLista;
 
-            tuoteNimiLista = "'" + string.Join("','", myydyimmatTuotteetLista.Select(n => n.Tuotenimi).ToList()) + "'";
-            tuoteMyyntiLista = string.Join(",", myydyimmatTuotteetLista.Select(n => n.Myyntieur).ToList());
+                List<MyydyimmatTuotteet> myydyimmatTuotteetLista = new List<MyydyimmatTuotteet>();
 
-            ViewBag.tuoteNimi = tuoteNimiLista;
-            ViewBag.tuoteMyynti = tuoteMyyntiLista;
+                var myydyimmatTuott = from tm in db.Top10Myynnit
+                                      orderby tm.myynti descending
+                                      select tm;
 
-            return View();
+                foreach (Top10Myynnit topmyynti in myydyimmatTuott)
+                {
+                    MyydyimmatTuotteet myytyTuote = new MyydyimmatTuotteet();
+                    myytyTuote.Tuotenimi = topmyynti.tuotenimi;
+                    myytyTuote.Myyntieur = (int)topmyynti.myynti;
+                    myydyimmatTuotteetLista.Add(myytyTuote);
+                }
+
+                tuoteNimiLista = "'" + string.Join("','", myydyimmatTuotteetLista.Select(n => n.Tuotenimi).ToList()) + "'";
+                tuoteMyyntiLista = string.Join(",", myydyimmatTuotteetLista.Select(n => n.Myyntieur).ToList());
+
+                ViewBag.tuoteNimi = tuoteNimiLista;
+                ViewBag.tuoteMyynti = tuoteMyyntiLista;
+
+                return View();
+            }
         }
 
 

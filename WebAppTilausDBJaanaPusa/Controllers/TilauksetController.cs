@@ -221,30 +221,38 @@ namespace WebAppTilausDBJaanaPusa.Controllers
 
         public ActionResult TilaustenMaara()
         {
-            string viikonPaivaLista;
-            string tilausMaaraLista;
-
-            List<TilauksetMape> tilauksetArkipaivinaLista = new List<TilauksetMape>();
-
-            var tilauksetArki = from ta in db.TilauksetArkipaivina
-                                orderby ta.tilausmaara
-                                select ta;
-
-            foreach (TilauksetArkipaivina tilaukset in tilauksetArki)
+            if (Session["UserName"] == null) //Tarkistaa, onko kirjauduttu sisään. Jos Session-UserName on tyhjä
             {
-                TilauksetMape tilaus = new TilauksetMape();
-                tilaus.ViikonPaiva = tilaukset.viikonpaiva;
-                tilaus.TilausMaara = (int)tilaukset.tilausmaara;
-                tilauksetArkipaivinaLista.Add(tilaus);
+                ViewBag.LoggedStatus = "Kirjaudu sisään";
+                return RedirectToAction("login", "home"); //Palautetaan Login-näkymä HomeControllerista
             }
+            else
+            {
+                string viikonPaivaLista;
+                string tilausMaaraLista;
 
-            viikonPaivaLista = "'" + string.Join("','", tilauksetArkipaivinaLista.Select(n => n.ViikonPaiva).ToList()) + "'";
-            tilausMaaraLista = string.Join(",", tilauksetArkipaivinaLista.Select(n => n.TilausMaara).ToList());
+                List<TilauksetMape> tilauksetArkipaivinaLista = new List<TilauksetMape>();
 
-            ViewBag.viikonPaiva = viikonPaivaLista;
-            ViewBag.tilausMaara = tilausMaaraLista;
+                var tilauksetArki = from ta in db.TilauksetArkipaivina
+                                    orderby ta.tilausmaara
+                                    select ta;
 
-            return View();
+                foreach (TilauksetArkipaivina tilaukset in tilauksetArki)
+                {
+                    TilauksetMape tilaus = new TilauksetMape();
+                    tilaus.ViikonPaiva = tilaukset.viikonpaiva;
+                    tilaus.TilausMaara = (int)tilaukset.tilausmaara;
+                    tilauksetArkipaivinaLista.Add(tilaus);
+                }
+
+                viikonPaivaLista = "'" + string.Join("','", tilauksetArkipaivinaLista.Select(n => n.ViikonPaiva).ToList()) + "'";
+                tilausMaaraLista = string.Join(",", tilauksetArkipaivinaLista.Select(n => n.TilausMaara).ToList());
+
+                ViewBag.viikonPaiva = viikonPaivaLista;
+                ViewBag.tilausMaara = tilausMaaraLista;
+
+                return View();
+            }
         }
 
         protected override void Dispose(bool disposing)
