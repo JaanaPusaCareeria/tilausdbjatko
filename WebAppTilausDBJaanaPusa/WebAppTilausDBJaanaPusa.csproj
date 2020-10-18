@@ -207,6 +207,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\MyydyimmatTuotteet.cs" />
+    <Compile Include="ViewModels\TilauksetMape.cs" />
     <Compile Include="ViewModels\TilausRivit.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -416,6 +417,7 @@
     <Content Include="Views\Tilaukset\_TilausRivit.cshtml" />
     <Content Include="Views\Tuotteet\_MyydyimmatTuotteet.cshtml" />
     <Content Include="Views\Tuotteet\Myydyimmat.cshtml" />
+    <Content Include="Views\Tilaukset\TilaustenMaara.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

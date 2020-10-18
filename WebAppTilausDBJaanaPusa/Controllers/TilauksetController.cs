@@ -177,39 +177,30 @@ namespace WebAppTilausDBJaanaPusa.Controllers
             }
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         public ActionResult TilausOtsikot()
         {
-            //if (Session["UserName"] == null) //Tarkistaa, onko kirjauduttu sisään. Jos Session-UserName on tyhjä
-            //{
-            //    ViewBag.LoggedStatus = "Kirjaudu sisään";
-            //    return RedirectToAction("login", "home"); //Palautetaan Login-näkymä HomeControllerista
-            //}
-            //else
-            //{
-                //ViewBag.LoggedStatus = "Kirjautuneena";
+            if (Session["UserName"] == null) //Tarkistaa, onko kirjauduttu sisään. Jos Session-UserName on tyhjä
+            {
+                ViewBag.LoggedStatus = "Kirjaudu sisään";
+                return RedirectToAction("login", "home"); //Palautetaan Login-näkymä HomeControllerista
+            }
+            else
+            {
+                ViewBag.LoggedStatus = "Kirjautuneena";
                 var tilaukset = db.Tilaukset.Include(t => t.Asiakkaat).Include(t => t.Postitoimipaikat);
                 return View(tilaukset.ToList());
-            //}
+            }
         }
 
         public ActionResult _TilausRivit(int? tilausid)
         {
-            //if (Session["UserName"] == null) //Tarkistaa, onko kirjauduttu sisään. Jos Session-UserName on tyhjä
-            //{
-            //    ViewBag.LoggedStatus = "Kirjaudu sisään";
-            //    return RedirectToAction("login", "home"); //Palautetaan Login-näkymä HomeControllerista
-            //}
-            //else
-            //{
+            if (Session["UserName"] == null) //Tarkistaa, onko kirjauduttu sisään. Jos Session-UserName on tyhjä
+            {
+                ViewBag.LoggedStatus = "Kirjaudu sisään";
+                return RedirectToAction("login", "home"); //Palautetaan Login-näkymä HomeControllerista
+            }
+            else
+            {
                 ViewBag.LoggedStatus = "Kirjautuneena";
                 var tilausRivilista  = from tr in db.Tilausrivit
                                        join t in db.Tuotteet on tr.TuoteID equals t.TuoteID
@@ -225,10 +216,45 @@ namespace WebAppTilausDBJaanaPusa.Controllers
                                        };
 
                     return PartialView(tilausRivilista);
-            //}
+            }
         }
 
-        
+        public ActionResult TilaustenMaara()
+        {
+            string viikonPaivaLista;
+            string tilausMaaraLista;
+
+            List<TilauksetMape> tilauksetArkipaivinaLista = new List<TilauksetMape>();
+
+            var tilauksetArki = from ta in db.TilauksetArkipaivina
+                                orderby ta.tilausmaara
+                                select ta;
+
+            foreach (TilauksetArkipaivina tilaukset in tilauksetArki)
+            {
+                TilauksetMape tilaus = new TilauksetMape();
+                tilaus.ViikonPaiva = tilaukset.viikonpaiva;
+                tilaus.TilausMaara = (int)tilaukset.tilausmaara;
+                tilauksetArkipaivinaLista.Add(tilaus);
+            }
+
+            viikonPaivaLista = "'" + string.Join("','", tilauksetArkipaivinaLista.Select(n => n.ViikonPaiva).ToList()) + "'";
+            tilausMaaraLista = string.Join(",", tilauksetArkipaivinaLista.Select(n => n.TilausMaara).ToList());
+
+            ViewBag.viikonPaiva = viikonPaivaLista;
+            ViewBag.tilausMaara = tilausMaaraLista;
+
+            return View();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
     }
 }
