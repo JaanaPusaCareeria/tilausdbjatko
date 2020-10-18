@@ -21,20 +21,22 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-<tr>
-    <td>@Html.DisplayFor(modelItem => item.TilausID)</td>
-    <td>@Html.DisplayFor(modelItem => item.TilausriviID)</td>
-    <td>@Html.DisplayFor(modelItem => item.Tuotteet.Nimi)</td>
-    <td>@Html.DisplayFor(modelItem => item.Maara)</td>
-    <td>@Html.DisplayFor(modelItem => item.Ahinta)</td>
-    <td>@Html.DisplayFor(modelItem => item.Tilaukset.Toimitusosoite)</td>
-    <td>
-        <a class="btn" href="~/Tilausrivit/Edit/@item.TilausriviID"><img src="~/Icons/pencil.svg" alt="Edit" width="22" height="22" title="Edit"></a>|
-        <a class="btn" href="~/Tilausrivit/Details/@item.TilausriviID"><img src="~/Icons/info-square.svg" alt="Details" width="22" height="22" title="Details"></a> |
-        <a class="btn" href="~/Tilausrivit/Delete/@item.TilausriviID"><img src="~/Icons/trash.svg" alt="Delete" width="22" height="22" title="Delete"></a>
-    </td>
-</tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.TilausID)</td>
+            <td>@Html.DisplayFor(modelItem => item.TilausriviID)</td>
+            <td>@Html.DisplayFor(modelItem => item.Tuotteet.Nimi)</td>
+            <td>@Html.DisplayFor(modelItem => item.Maara)</td>
+            <td>@Html.DisplayFor(modelItem => item.Ahinta)</td>
+            <td>@Html.DisplayFor(modelItem => item.Tilaukset.Toimitusosoite)</td>
+            <td>
+                <a class="btn" href="~/Tilausrivit/Edit/@item.TilausriviID"><img src="~/Icons/pencil.svg" alt="Edit" width="22" height="22" title="Edit"></a>|
+                <a class="btn" href="~/Tilausrivit/Details/@item.TilausriviID"><img src="~/Icons/info-square.svg" alt="Details" width="22" height="22" title="Details"></a> |
+                <a class="btn" href="~/Tilausrivit/Delete/@item.TilausriviID"><img src="~/Icons/trash.svg" alt="Delete" width="22" height="22" title="Delete"></a>
+            </td>
+        </tr>
+    }
 
 </table>
+
