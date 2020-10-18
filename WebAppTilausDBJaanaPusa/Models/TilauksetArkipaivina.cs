@@ -12,11 +12,10 @@ namespace WebAppTilausDBJaanaPusa.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Top10Myynti
+    public partial class TilauksetArkipaivina
     {
         public long RiviID { get; set; }
-        public Nullable<int> TuoteID { get; set; }
-        public string Tuotenimi { get; set; }
-        public Nullable<decimal> Myynti { get; set; }
+        public string viikonpaiva { get; set; }
+        public Nullable<int> tilausmaara { get; set; }
     }
 }

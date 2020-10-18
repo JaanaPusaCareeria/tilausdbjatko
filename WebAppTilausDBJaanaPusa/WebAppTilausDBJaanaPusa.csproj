@@ -26,7 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>3.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,6 +36,19 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
+    <TypeScriptModuleKind />
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -153,16 +166,19 @@
     <Compile Include="Models\Logins.cs">
       <DependentUpon>TilausDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MyyntiTuotteittain.cs">
+      <DependentUpon>TilausDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Postitoimipaikat.cs">
       <DependentUpon>TilausDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tilaukset.cs">
       <DependentUpon>TilausDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TilauksetPaivittain.cs">
+    <Compile Include="Models\TilauksetArkipaivina.cs">
       <DependentUpon>TilausDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TilauksetViikonpaivittain.cs">
+    <Compile Include="Models\TilauksetPaivittain.cs">
       <DependentUpon>TilausDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TilausDBModel.Context.cs">
@@ -183,13 +199,14 @@
     <Compile Include="Models\Tilausrivit.cs">
       <DependentUpon>TilausDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Top10Myynti.cs">
+    <Compile Include="Models\Top10Myynnit.cs">
       <DependentUpon>TilausDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tuotteet.cs">
       <DependentUpon>TilausDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\MyydyimmatTuotteet.cs" />
     <Compile Include="ViewModels\TilausRivit.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -397,9 +414,12 @@
     <Content Include="Views\Home\_LoginModal.cshtml" />
     <Content Include="Views\Tilaukset\TilausOtsikot.cshtml" />
     <Content Include="Views\Tilaukset\_TilausRivit.cshtml" />
+    <Content Include="Views\Tuotteet\_MyydyimmatTuotteet.cshtml" />
+    <Content Include="Views\Tuotteet\Myydyimmat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Tilastot\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

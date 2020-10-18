@@ -18,8 +18,9 @@
         <AssociationConnector Association="TilausDBModel1.FK_Tilausrivit_Tilaukset" ManuallyRouted="false" />
         <AssociationConnector Association="TilausDBModel1.FK_Tilausrivit_Tuotteet" ManuallyRouted="false" />
         <EntityTypeShape EntityType="TilausDBModel1.TilauksetPaivittain" Width="1.5" PointX="0.75" PointY="7.75" />
-        <EntityTypeShape EntityType="TilausDBModel1.TilauksetViikonpaivittain" Width="1.5" PointX="2.75" PointY="7.75" />
-        <EntityTypeShape EntityType="TilausDBModel1.Top10Myynti" Width="1.5" PointX="5.375" PointY="7.75" />
+        <EntityTypeShape EntityType="TilausDBModel1.TilauksetArkipaivina" Width="1.5" PointX="7.375" PointY="7.75" />
+        <EntityTypeShape EntityType="TilausDBModel1.MyyntiTuotteittain" Width="1.5" PointX="3.375" PointY="7.75" />
+        <EntityTypeShape EntityType="TilausDBModel1.Top10Myynnit" Width="1.5" PointX="9.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

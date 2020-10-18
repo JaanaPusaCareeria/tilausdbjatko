@@ -3,27 +3,78 @@
 @{
     ViewBag.Title = "Tuotteet";
 }
-    <div class="container-fluid">
-        <h2>Tuotteet</h2>
-        <a class="btn btn-outline-secondary" href="~/Tuotteet/Create"><img src="~/Icons/plus-square.svg" alt="Create new" width="20" height="20" title="Create new">  Create new</a>
-        <p></p>
-        <div class="row">
-            @foreach (var item in Model)
-            {
-                <div class="col-3">
-                    <div class="card mb-3">
-                        <h3 class="card-header">@Html.DisplayFor(modelItem => item.Nimi)</h3>
-                        <div class="card-body">
-                            <h5 class="card-title">Hinta @Html.DisplayFor(modelItem => item.Ahinta)</h5>
-                            <h6 class="card-subtitle text-muted">TuoteID @Html.DisplayFor(modelItem => item.TuoteID)</h6>
-                        </div>
-                        <img style="height: 100%; width: 100%; display: block;" src="@Html.DisplayFor(modelItem => item.Kuvalinkki)" alt="@Html.DisplayFor(modelItem => item.Kuvalinkki)">
-                        <div class="card-body">
-                            <a class="btn" href="~/Tuotteet/Edit/@item.TuoteID"><img src="~/Icons/pencil.svg" alt="Edit" width="22" height="22" title="Edit"></a>
-                            <a class="btn" href="~/Tuotteet/Delete/@item.TuoteID"><img src="~/Icons/trash.svg" alt="Delete" width="22" height="22" title="Delete"></a>
-                        </div>
+
+
+@*@section scripts {
+    <script type="text/javascript">
+        let labelTexts = [@Html.Raw(ViewBag.tuoteNimi)];
+        let dataValues = [@ViewBag.tuoteMyynti];
+        var ctx = document.getElementById('myydyimmat').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labelTexts,
+                datasets: [{
+                    label: 'Top 10 myynti tuotteittain',
+                    data: dataValues,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+}*@
+
+<div class="container-fluid">
+    <h2>Tuotteet</h2>
+    <a class="btn btn-outline-secondary" href="/Tuotteet/Myydyimmat">Myydyimmät tuotteet top 10</a>
+    <a class="btn btn-outline-secondary" href="~/Tuotteet/Create"><img src="~/Icons/plus-square.svg" alt="Create new" width="20" height="20" title="Create new">  Create new</a>
+    <p></p>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-3">
+                <div class="card mb-3">
+                    <h3 class="card-header">@Html.DisplayFor(modelItem => item.Nimi)</h3>
+                    <div class="card-body">
+                        <h5 class="card-title">Hinta @Html.DisplayFor(modelItem => item.Ahinta)</h5>
+                        <h6 class="card-subtitle text-muted">TuoteID @Html.DisplayFor(modelItem => item.TuoteID)</h6>
+                    </div>
+                    <img style="height: 100%; width: 100%; display: block;" src="@Html.DisplayFor(modelItem => item.Kuvalinkki)" alt="@Html.DisplayFor(modelItem => item.Kuvalinkki)">
+                    <div class="card-body">
+                        <a class="btn" href="~/Tuotteet/Edit/@item.TuoteID"><img src="~/Icons/pencil.svg" alt="Edit" width="22" height="22" title="Edit"></a>
+                        <a class="btn" href="~/Tuotteet/Delete/@item.TuoteID"><img src="~/Icons/trash.svg" alt="Delete" width="22" height="22" title="Delete"></a>
                     </div>
                 </div>
-            }
-        </div>
+            </div>
+        }
     </div>
+</div>
+
+@*@{ 
+    Html.RenderPartial("_MyydyimmatTuotteet");
+}*@

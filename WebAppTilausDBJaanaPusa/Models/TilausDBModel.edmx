@@ -73,6 +73,28 @@
           <Property Name="Kuvalinkki" Type="varchar" MaxLength="200" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'TilausDB.dbo.MyyntiTuotteittain' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="MyyntiTuotteittain">
+          <Key>
+            <PropertyRef Name="RiviID" />
+          </Key>
+          <Property Name="RiviID" Type="bigint" Nullable="false" />
+          <Property Name="TuoteID" Type="int" />
+          <Property Name="Tuotenimi" Type="varchar" MaxLength="50" />
+          <Property Name="Myyntikpl" Type="int" />
+          <Property Name="Myyntieur" Type="numeric" Precision="38" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TilausDB.dbo.TilauksetArkipaivina' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TilauksetArkipaivina">
+          <Key>
+            <PropertyRef Name="RiviID" />
+          </Key>
+          <Property Name="RiviID" Type="bigint" Nullable="false" />
+          <Property Name="viikonpaiva" Type="nvarchar" MaxLength="30" />
+          <Property Name="tilausmaara" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'TilausDB.dbo.TilauksetPaivittain' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TilauksetPaivittain">
           <Key>
@@ -84,25 +106,14 @@ warning 6002: The table/view 'TilausDB.dbo.TilauksetPaivittain' does not have a 
           <Property Name="Tilausmaara" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'TilausDB.dbo.TilauksetViikonpaivittain' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="TilauksetViikonpaivittain">
+warning 6002: The table/view 'TilausDB.dbo.Top10Myynnit' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Top10Myynnit">
           <Key>
             <PropertyRef Name="RiviID" />
           </Key>
           <Property Name="RiviID" Type="bigint" Nullable="false" />
-          <Property Name="viikonpaiva" Type="nvarchar" MaxLength="30" />
-          <Property Name="tilausmaara" Type="int" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'TilausDB.dbo.Top10Myynti' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Top10Myynti">
-          <Key>
-            <PropertyRef Name="RiviID" />
-          </Key>
-          <Property Name="RiviID" Type="bigint" Nullable="false" />
-          <Property Name="TuoteID" Type="int" />
-          <Property Name="Tuotenimi" Type="varchar" MaxLength="50" />
-          <Property Name="Myynti" Type="numeric" Precision="38" Scale="2" />
+          <Property Name="tuotenimi" Type="varchar" MaxLength="50" />
+          <Property Name="myynti" Type="numeric" Precision="38" Scale="2" />
         </EntityType>
         <Association Name="FK_Asiakkaat_Postitoimipaikat">
           <End Role="Postitoimipaikat" Type="Self.Postitoimipaikat" Multiplicity="0..1" />
@@ -172,6 +183,22 @@ warning 6002: The table/view 'TilausDB.dbo.Top10Myynti' does not have a primary 
           <EntitySet Name="Tilaukset" EntityType="Self.Tilaukset" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tilausrivit" EntityType="Self.Tilausrivit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tuotteet" EntityType="Self.Tuotteet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MyyntiTuotteittain" EntityType="Self.MyyntiTuotteittain" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [MyyntiTuotteittain].[RiviID] AS [RiviID], 
+    [MyyntiTuotteittain].[TuoteID] AS [TuoteID], 
+    [MyyntiTuotteittain].[Tuotenimi] AS [Tuotenimi], 
+    [MyyntiTuotteittain].[Myyntikpl] AS [Myyntikpl], 
+    [MyyntiTuotteittain].[Myyntieur] AS [Myyntieur]
+    FROM [dbo].[MyyntiTuotteittain] AS [MyyntiTuotteittain]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TilauksetArkipaivina" EntityType="Self.TilauksetArkipaivina" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TilauksetArkipaivina].[RiviID] AS [RiviID], 
+    [TilauksetArkipaivina].[viikonpaiva] AS [viikonpaiva], 
+    [TilauksetArkipaivina].[tilausmaara] AS [tilausmaara]
+    FROM [dbo].[TilauksetArkipaivina] AS [TilauksetArkipaivina]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="TilauksetPaivittain" EntityType="Self.TilauksetPaivittain" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [TilauksetPaivittain].[RiviID] AS [RiviID], 
@@ -180,20 +207,12 @@ warning 6002: The table/view 'TilausDB.dbo.Top10Myynti' does not have a primary 
     [TilauksetPaivittain].[Tilausmaara] AS [Tilausmaara]
     FROM [dbo].[TilauksetPaivittain] AS [TilauksetPaivittain]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="TilauksetViikonpaivittain" EntityType="Self.TilauksetViikonpaivittain" store:Type="Views" store:Schema="dbo">
+          <EntitySet Name="Top10Myynnit" EntityType="Self.Top10Myynnit" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [TilauksetViikonpaivittain].[RiviID] AS [RiviID], 
-    [TilauksetViikonpaivittain].[viikonpaiva] AS [viikonpaiva], 
-    [TilauksetViikonpaivittain].[tilausmaara] AS [tilausmaara]
-    FROM [dbo].[TilauksetViikonpaivittain] AS [TilauksetViikonpaivittain]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Top10Myynti" EntityType="Self.Top10Myynti" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Top10Myynti].[RiviID] AS [RiviID], 
-    [Top10Myynti].[TuoteID] AS [TuoteID], 
-    [Top10Myynti].[Tuotenimi] AS [Tuotenimi], 
-    [Top10Myynti].[Myynti] AS [Myynti]
-    FROM [dbo].[Top10Myynti] AS [Top10Myynti]</DefiningQuery>
+    [Top10Myynnit].[RiviID] AS [RiviID], 
+    [Top10Myynnit].[tuotenimi] AS [tuotenimi], 
+    [Top10Myynnit].[myynti] AS [myynti]
+    FROM [dbo].[Top10Myynnit] AS [Top10Myynnit]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Asiakkaat_Postitoimipaikat" Association="Self.FK_Asiakkaat_Postitoimipaikat">
             <End Role="Postitoimipaikat" EntitySet="Postitoimipaikat" />
@@ -386,8 +405,9 @@ warning 6002: The table/view 'TilausDB.dbo.Top10Myynti' does not have a primary 
             <End Role="Tilausrivit" EntitySet="Tilausrivit" />
           </AssociationSet>
           <EntitySet Name="TilauksetPaivittain" EntityType="TilausDBModel1.TilauksetPaivittain" />
-          <EntitySet Name="TilauksetViikonpaivittain" EntityType="TilausDBModel1.TilauksetViikonpaivittain" />
-          <EntitySet Name="Top10Myynti" EntityType="TilausDBModel1.Top10Myynti" />
+          <EntitySet Name="TilauksetArkipaivina" EntityType="TilausDBModel1.TilauksetArkipaivina" />
+          <EntitySet Name="MyyntiTuotteittain" EntityType="TilausDBModel1.MyyntiTuotteittain" />
+          <EntitySet Name="Top10Myynnit" EntityType="TilausDBModel1.Top10Myynnit" />
         </EntityContainer>
         <EntityType Name="TilauksetPaivittain">
           <Key>
@@ -398,7 +418,7 @@ warning 6002: The table/view 'TilausDB.dbo.Top10Myynti' does not have a primary 
           <Property Name="Viikonpaiva" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Tilausmaara" Type="Int32" />
         </EntityType>
-        <EntityType Name="TilauksetViikonpaivittain">
+        <EntityType Name="TilauksetArkipaivina">
           <Key>
             <PropertyRef Name="RiviID" />
           </Key>
@@ -406,14 +426,23 @@ warning 6002: The table/view 'TilausDB.dbo.Top10Myynti' does not have a primary 
           <Property Name="viikonpaiva" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="tilausmaara" Type="Int32" />
         </EntityType>
-        <EntityType Name="Top10Myynti">
+        <EntityType Name="MyyntiTuotteittain">
           <Key>
             <PropertyRef Name="RiviID" />
           </Key>
           <Property Name="RiviID" Type="Int64" Nullable="false" />
           <Property Name="TuoteID" Type="Int32" />
           <Property Name="Tuotenimi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Myynti" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="Myyntikpl" Type="Int32" />
+          <Property Name="Myyntieur" Type="Decimal" Precision="38" Scale="2" />
+        </EntityType>
+        <EntityType Name="Top10Myynnit">
+          <Key>
+            <PropertyRef Name="RiviID" />
+          </Key>
+          <Property Name="RiviID" Type="Int64" Nullable="false" />
+          <Property Name="tuotenimi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="myynti" Type="Decimal" Precision="38" Scale="2" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -505,21 +534,31 @@ warning 6002: The table/view 'TilausDB.dbo.Top10Myynti' does not have a primary 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TilauksetViikonpaivittain">
-            <EntityTypeMapping TypeName="TilausDBModel1.TilauksetViikonpaivittain">
-              <MappingFragment StoreEntitySet="TilauksetViikonpaivittain">
+          <EntitySetMapping Name="TilauksetArkipaivina">
+            <EntityTypeMapping TypeName="TilausDBModel1.TilauksetArkipaivina">
+              <MappingFragment StoreEntitySet="TilauksetArkipaivina">
                 <ScalarProperty Name="tilausmaara" ColumnName="tilausmaara" />
                 <ScalarProperty Name="viikonpaiva" ColumnName="viikonpaiva" />
                 <ScalarProperty Name="RiviID" ColumnName="RiviID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Top10Myynti">
-            <EntityTypeMapping TypeName="TilausDBModel1.Top10Myynti">
-              <MappingFragment StoreEntitySet="Top10Myynti">
-                <ScalarProperty Name="Myynti" ColumnName="Myynti" />
+          <EntitySetMapping Name="MyyntiTuotteittain">
+            <EntityTypeMapping TypeName="TilausDBModel1.MyyntiTuotteittain">
+              <MappingFragment StoreEntitySet="MyyntiTuotteittain">
+                <ScalarProperty Name="Myyntieur" ColumnName="Myyntieur" />
+                <ScalarProperty Name="Myyntikpl" ColumnName="Myyntikpl" />
                 <ScalarProperty Name="Tuotenimi" ColumnName="Tuotenimi" />
                 <ScalarProperty Name="TuoteID" ColumnName="TuoteID" />
+                <ScalarProperty Name="RiviID" ColumnName="RiviID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Top10Myynnit">
+            <EntityTypeMapping TypeName="TilausDBModel1.Top10Myynnit">
+              <MappingFragment StoreEntitySet="Top10Myynnit">
+                <ScalarProperty Name="myynti" ColumnName="myynti" />
+                <ScalarProperty Name="tuotenimi" ColumnName="tuotenimi" />
                 <ScalarProperty Name="RiviID" ColumnName="RiviID" />
               </MappingFragment>
             </EntityTypeMapping>

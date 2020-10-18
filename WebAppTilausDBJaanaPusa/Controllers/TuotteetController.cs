@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebAppTilausDBJaanaPusa.Models;
+using WebAppTilausDBJaanaPusa.ViewModels;
 
 namespace WebAppTilausDBJaanaPusa.Controllers
 {
@@ -174,6 +175,37 @@ namespace WebAppTilausDBJaanaPusa.Controllers
             }
 
         }
+
+
+        public ActionResult Myydyimmat()
+        {
+            string tuoteNimiLista;
+            string tuoteMyyntiLista;
+
+            List<MyydyimmatTuotteet> myydyimmatTuotteetLista = new List<MyydyimmatTuotteet>();
+
+            var myydyimmatTuott = from tm in db.Top10Myynnit
+                                  orderby tm.myynti descending
+                                  select tm;
+
+            foreach (Top10Myynnit topmyynti in myydyimmatTuott)
+            {
+                MyydyimmatTuotteet myytyTuote = new MyydyimmatTuotteet();
+                myytyTuote.Tuotenimi = topmyynti.tuotenimi;
+                myytyTuote.Myyntieur = (int)topmyynti.myynti;
+                myydyimmatTuotteetLista.Add(myytyTuote);
+            }
+
+            tuoteNimiLista = "'" + string.Join("','", myydyimmatTuotteetLista.Select(n => n.Tuotenimi).ToList()) + "'";
+            tuoteMyyntiLista = string.Join(",", myydyimmatTuotteetLista.Select(n => n.Myyntieur).ToList());
+
+            ViewBag.tuoteNimi = tuoteNimiLista;
+            ViewBag.tuoteMyynti = tuoteMyyntiLista;
+
+            return View();
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {
